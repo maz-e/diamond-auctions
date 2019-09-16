@@ -12,6 +12,7 @@ import Filter from './Filter'
 import NotFound from './NotFound'
 import Spinner from './Spinner'
 import Footer from './Footer'
+import ScrollToTop from './ScrollToTop'
 import handleErrors from '../common/handleErrors'
 import UIkit from 'uikit'
 import './index.sass'
@@ -135,9 +136,9 @@ function App({ history }) {
         
             <Switch>
                 <Route exact path="/" render={() => !items ? 
-                <Spinner /> : <Items items={items} onItem={handleRetrieve} />} />
+                <Spinner /> : <ScrollToTop><Items items={items} onItem={handleRetrieve} /></ScrollToTop>} />
 
-                {logic.isUserLoggedIn && <Route path="/items/:id" render={(props) => < Item item={item} getItem={handleRetrieve} itemId={props.match.params.id} onLogout={handleLogout} />} />}
+                {logic.isUserLoggedIn && <Route path="/items/:id" render={(props) => <ScrollToTop><Item item={item} getItem={handleRetrieve} itemId={props.match.params.id} onLogout={handleLogout} /></ScrollToTop>} />}
                 
                 {logic.isUserLoggedIn && <Route path="/user/mybids" render={() => <MyBids isLogged={logic.isUserLoggedIn} onItem={handleRetrieve} onLogout={handleLogout}/>} />}
 
