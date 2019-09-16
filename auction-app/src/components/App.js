@@ -10,6 +10,7 @@ import Profile from './Profile'
 import MyBids from './MyBids'
 import Filter from './Filter'
 import NotFound from './NotFound'
+import Spinner from './Spinner'
 import Footer from './Footer'
 import handleErrors from '../common/handleErrors'
 import UIkit from 'uikit'
@@ -46,7 +47,6 @@ function App({ history }) {
     async function handleSearch(query) {
         try {
             const _items = await logic.searchItems(query)
-            console.log(_items)
             setItems(_items)    
         } catch (error) {
             handleErrors(error)
@@ -135,9 +135,7 @@ function App({ history }) {
         
             <Switch>
                 <Route exact path="/" render={() => !items ? 
-                <div className="spinner uk-text-center">
-                    <div data-uk-spinner></div>
-                </div> : <Items items={items} onItem={handleRetrieve} />} />
+                <Spinner /> : <Items items={items} onItem={handleRetrieve} />} />
 
                 {logic.isUserLoggedIn && <Route path="/items/:id" render={(props) => < Item item={item} getItem={handleRetrieve} itemId={props.match.params.id} onLogout={handleLogout} />} />}
                 
