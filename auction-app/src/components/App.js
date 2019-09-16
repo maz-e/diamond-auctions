@@ -46,6 +46,7 @@ function App({ history }) {
     async function handleSearch(query) {
         try {
             const _items = await logic.searchItems(query)
+            console.log(_items)
             setItems(_items)    
         } catch (error) {
             handleErrors(error)
@@ -133,7 +134,10 @@ function App({ history }) {
             <Route exact path="/" render={() => <Filter onFilter={handleFilter} query={query} filters={filters}/>} />
         
             <Switch>
-                <Route exact path="/" render={() => <Items items={items} onItem={handleRetrieve} />} />
+                <Route exact path="/" render={() => !items ? 
+                <div className="spinner uk-text-center">
+                    <div data-uk-spinner></div>
+                </div> : <Items items={items} onItem={handleRetrieve} />} />
 
                 {logic.isUserLoggedIn && <Route path="/items/:id" render={(props) => < Item item={item} getItem={handleRetrieve} itemId={props.match.params.id} onLogout={handleLogout} />} />}
                 
