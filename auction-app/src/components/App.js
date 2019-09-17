@@ -10,7 +10,9 @@ import Profile from './Profile'
 import MyBids from './MyBids'
 import Filter from './Filter'
 import NotFound from './NotFound'
+import Spinner from './Spinner'
 import Footer from './Footer'
+import ScrollToTop from './ScrollToTop'
 import handleErrors from '../common/handleErrors'
 import UIkit from 'uikit'
 import './index.sass'
@@ -110,6 +112,10 @@ function App({ history }) {
         try {
             await logic.loginUser(username, password)
             setIsLoggedIn(logic.isUserLoggedIn)
+
+            const element = document.getElementById("offcanvas-nav")
+            UIkit.offcanvas(element).hide();
+
             history.push('/')
         } catch (error) {
             handleErrors(error)
@@ -119,6 +125,10 @@ function App({ history }) {
     function handleLogout() {
         logic.logoutUser()
         UIkit.notification({message: "GoodBye!", status: 'success'})
+        
+        const element = document.getElementById("offcanvas-nav")
+        UIkit.offcanvas(element).hide();
+        
         setIsLoggedIn(logic.isUserLoggedIn)
         setUser(null)
         history.push('/')
@@ -133,9 +143,10 @@ function App({ history }) {
             <Route exact path="/" render={() => <Filter onFilter={handleFilter} query={query} filters={filters}/>} />
         
             <Switch>
-                <Route exact path="/" render={() => <Items items={items} onItem={handleRetrieve} />} />
+                <Route exact path="/" render={() => !items ? 
+                <Spinner /> : <ScrollToTop><Items items={items} onItem={handleRetrieve} /></ScrollToTop>} />
 
-                {logic.isUserLoggedIn && <Route path="/items/:id" render={(props) => < Item item={item} getItem={handleRetrieve} itemId={props.match.params.id} onLogout={handleLogout} />} />}
+                {logic.isUserLoggedIn && <Route path="/items/:id" render={(props) => <ScrollToTop><Item item={item} getItem={handleRetrieve} itemId={props.match.params.id} onLogout={handleLogout} /></ScrollToTop>} />}
                 
                 {logic.isUserLoggedIn && <Route path="/user/mybids" render={() => <MyBids isLogged={logic.isUserLoggedIn} onItem={handleRetrieve} onLogout={handleLogout}/>} />}
 
