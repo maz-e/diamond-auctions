@@ -112,6 +112,10 @@ function App({ history }) {
         try {
             await logic.loginUser(username, password)
             setIsLoggedIn(logic.isUserLoggedIn)
+
+            const element = document.getElementById("offcanvas-nav")
+            UIkit.offcanvas(element).hide();
+
             history.push('/')
         } catch (error) {
             handleErrors(error)
@@ -121,6 +125,10 @@ function App({ history }) {
     function handleLogout() {
         logic.logoutUser()
         UIkit.notification({message: "GoodBye!", status: 'success'})
+        
+        const element = document.getElementById("offcanvas-nav")
+        UIkit.offcanvas(element).hide();
+        
         setIsLoggedIn(logic.isUserLoggedIn)
         setUser(null)
         history.push('/')

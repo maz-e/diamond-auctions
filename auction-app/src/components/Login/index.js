@@ -20,7 +20,7 @@ function Login({onLogin}) {
                 <input className="uk-input uk-form-width-medium login-form__input" type="text" name="email" placeholder="Email" required onChange={e => setEmail(e.target.value)} />
                 <input className="uk-input uk-form-width-medium login-form__input" type="password" name="password" placeholder="Password" required onChange={e => setPassword(e.target.value)}/>
                 <button className="uk-button uk-button-default">Login</button>
-            <div className="uk-navbar-subtitle">Don't have an account? <Link to="/register">Sign up</Link></div>
+            <div className="uk-navbar-subtitle signup">Don't have an account? <Link to="/register">Sign up</Link></div>
             </form>
         </div>
     </div>
