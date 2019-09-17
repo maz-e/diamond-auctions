@@ -14,7 +14,7 @@ function Profile({user, onUpdate}) {
 
     return <>
         <div className="" data-uk-grid>
-            <img className="uk-width-auto" src={user && user.avatar} alt="user avatar photo"/>
+            <img className="uk-width-auto" src={user && user.avatar} alt="user avatar"/>
             <form>
                 <h3 className="uk-text-uppercase">{user && `${user.name} ${user.surname}`}</h3>
                 <div data-uk-form-custom>
