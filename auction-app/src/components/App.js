@@ -140,7 +140,7 @@ function App({ history }) {
 
             <Route exact path="/" render={() => <Search onSearch={handleQuery} />} />
 
-            <Route exact path="/" render={() => <Filter onFilter={handleFilter} query={query} filters={filters}/>} />
+            <Route exact path="/" render={() => <Filter onFilter={handleFilter} filters={filters}/>} />
         
             <Switch>
                 <Route exact path="/" render={() => !items ? 

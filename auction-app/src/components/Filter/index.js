@@ -6,7 +6,7 @@ import FiltersDelete from '../FiltersDelete'
 import handleErrors from '../../common/handleErrors';
 import { withRouter } from 'react-router-dom'
 
-function Filter({ onFilter, query, filters, history }) {
+function Filter({ onFilter, filters, history }) {
 
     const [startDate, setStartDate] = useState(null)
     const [endDate, setEndDate] = useState(null)
@@ -27,10 +27,15 @@ function Filter({ onFilter, query, filters, history }) {
 
     useEffect(() => {
         if(filters && Object.keys(filters).length) {
-            const {city} = filters
+            const {startDate, endDate, startPrice, endPrice, city, category} = filters
+            setStartDate(startDate)
+            setEndDate(endDate)
+            setStartPrice(startPrice)
+            setEndPrice(endPrice)
             setCity(city)
+            setCategory(category)
         }
-    }, [query, filters])
+    }, [filters])
 
     async function handleCities() {
         try {
@@ -81,6 +86,9 @@ function Filter({ onFilter, query, filters, history }) {
                 setCategory(value)
                 onFilter({ startDate, endDate, startPrice, endPrice, city, category: value })
                 break;
+            default:
+                onFilter(null)
+                break;
         }
     }
 
@@ -101,7 +109,8 @@ function Filter({ onFilter, query, filters, history }) {
 
     return <ul className="uk-margin-remove-top" data-uk-accordion>
         <li>
-            <a className="uk-accordion-title" href="#">Filters {((startDate && endDate) || (startPrice && endPrice) || city || category) && <span className="uk-label uk-label-success">Selected</span>}</a>
+            <a className="uk-accordion-title">Filters {((startDate && endDate) || (startPrice && endPrice) || city || category) && <span className="uk-label uk-label-success">Selected</span>}</a>
+            <button className="uk-accordion-title">Filters {((startDate && endDate) || (startPrice && endPrice) || city || category) && <span className="uk-label uk-label-success">Selected</span>}</button>
             <div className="uk-accordion-content">
                 <div className='home__section-filter'> 
                     <form className="uk-form-stacked" onChange={handleChange} onSubmit={deleteFilters}>
